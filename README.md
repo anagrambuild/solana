@@ -21,7 +21,7 @@ USER solana
 * linux/amd64 
 * linux/arm64
 
-Also available from [GitHub GHCR](https://github.com/anagrambuild/solana/pkgs/container/rust)
+Also available from [GitHub GHCR](https://github.com/anagrambuild/solana/pkgs/container/solana)
 
 
 Key benefits of using development containers in Visual Studio Code include:
