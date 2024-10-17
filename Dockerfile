@@ -97,6 +97,8 @@ WORKDIR /home/solana
 ENV USER=solana
 USER solana
 
+ENV CARGO_HOME=/usr/local/cargo
+ENV RUSTUP_HOME=/usr/local/rustup
 RUN rustup default stable
 
 LABEL \
