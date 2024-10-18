@@ -2,7 +2,7 @@
 
 VERSION=$(git rev-parse HEAD | cut -c 1-8)
 
-PROJECT=anagrambuild/$(basename ${PWD})
+PROJECT=ghcr.io/anagrambuild/$(basename ${PWD})
 
 # cross platform okay:
 # --platform=amd64 or arm64
