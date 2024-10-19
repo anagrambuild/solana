@@ -10,9 +10,9 @@ This development container for Visual Studio Code is a pre-configured and isolat
 
 ```
 FROM anagrambuild/solana:latest
-ARG SOLANA=1.18.22
+ARG SOLANA_VERSION=1.18.22
 ENV USER=solana
-ENV PATH=${PATH}:/usr/local/cargo/bin:/go/bin:/home/solana/.local/share/solana/install/releases/${SOLANA}/bin
+ENV PATH=${PATH}:/usr/local/cargo/bin:/go/bin:/home/solana/.local/share/solana/install/releases/${SOLANA_VERSION}/bin
 WORKDIR /home/solana
 USER solana
 ```
@@ -21,10 +21,16 @@ USER solana
 * linux/amd64 
 * linux/arm64
 
+#### Precompiled binaries
+
+Precompiled binaries are provided for amd64 architecture.  Arm64 is supported by building locally using the `build.sh`
+
 Also available from [GitHub GHCR](https://github.com/anagrambuild/solana/pkgs/container/solana)
 
 
-Key benefits of using development containers in Visual Studio Code include:
+### Key benefits
+
+Benefits of using development containers in Visual Studio Code include:
 
 1. **Consistency**: Development containers ensure that everyone on the team is using the same environment, reducing "works on my machine" issues.
 
