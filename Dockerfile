@@ -15,7 +15,6 @@ ARG TARGETARCH
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get update && \
   apt-get install -y -q --no-install-recommends \
-    build-essential \
     ca-certificates \
     curl \
     git \
