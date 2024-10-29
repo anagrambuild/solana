@@ -1,3 +1,7 @@
+# 1.18.22_9 (2024-10-28)
+
+* remove build-essential, add back cmake and clang
+
 # 1.18.22_7 (2024-10-19)
 
 * final round of cleanup

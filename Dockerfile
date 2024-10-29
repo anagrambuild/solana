@@ -16,6 +16,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get update && \
   apt-get install -y -q --no-install-recommends \
     ca-certificates \
+    cmake \
+    clang \
     curl \
     git \
     gnupg2 \
@@ -25,6 +27,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     libudev-dev \
     linux-headers-${TARGETARCH} \
     llvm \
+    make \
     openssl \
     pkg-config \
     protobuf-compiler \
@@ -38,7 +41,6 @@ RUN useradd --create-home -s /bin/bash ${USER} && \
     usermod -a -G sudo ${USER} && \
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
     chown -R ${USER}:${USER} /home/${USER}
-
 
 USER solana
 
