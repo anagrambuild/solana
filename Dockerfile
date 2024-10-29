@@ -15,19 +15,18 @@ ARG TARGETARCH
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get update && \
   apt-get install -y -q --no-install-recommends \
+    build-essential \
     ca-certificates \
     cmake \
     clang \
     curl \
     git \
     gnupg2 \
-    libc6-dev \ 
     libclang-dev \
     libssl-dev \
     libudev-dev \
     linux-headers-${TARGETARCH} \
     llvm \
-    make \
     openssl \
     pkg-config \
     protobuf-compiler \
@@ -63,6 +62,7 @@ FROM debian:stable-slim
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get update && \
   apt-get install -y -q --no-install-recommends \
+    build-essential \
     ca-certificates \
     curl \
     git \
