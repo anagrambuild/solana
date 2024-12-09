@@ -51,9 +51,8 @@ RUN echo ${PATH} && cargo --version
 
 # Solana
 ARG SOLANA_VERSION=1.18.22
-ADD --chown=${USER}:${USER} https://github.com/solana-labs/solana/archive/refs/tags/v${SOLANA_VERSION}.tar.gz v${SOLANA_VERSION}.tar.gz
-RUN tar -zxvf v${SOLANA_VERSION}.tar.gz || { echo "Failed to extract tarball"; exit 1; }
-RUN ./solana-${SOLANA_VERSION}/scripts/cargo-install-all.sh /home/solana/.local/share/solana/install/releases/${SOLANA_VERSION}
+RUN git clone --depth 1 --branch v${SOLANA_VERSION} https://github.com/solana-labs/solana.git && \
+    cd solana && ./scripts/cargo-install-all.sh /home/solana/.local/share/solana/install/releases/${SOLANA_VERSION}
 RUN for file in /home/solana/.local/share/solana/install/releases/${SOLANA_VERSION}/bin/*; do strip ${file}; done
 ENV PATH=$/build/bin:$PATH
 
