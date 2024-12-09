@@ -10,26 +10,20 @@ RUN go install github.com/google/yamlfmt/cmd/yamlfmt@latest && \
     strip $(which yamlfmt) && \
     yamlfmt --version
 
-FROM rust:1-slim AS builder
+FROM rust:1-slim AS sol-builder
 ARG TARGETARCH
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get update && \
   apt-get install -y -q --no-install-recommends \
     build-essential \
-    ca-certificates \
-    cmake \
-    clang \
+    pkg-config \
+    libudev-dev \
+    llvm \
+    libclang-dev \
+    protobuf-compiler \
     curl \
     git \
     gnupg2 \
-    libclang-dev \
-    libssl-dev \
-    libudev-dev \
-    linux-headers-${TARGETARCH} \
-    llvm \
-    openssl \
-    pkg-config \
-    protobuf-compiler \
     python3 \
     && \
   apt-get clean && \
@@ -79,18 +73,20 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV USER=solana
+
 RUN useradd --create-home -s /bin/bash ${USER} && \
     usermod -a -G sudo ${USER} && \
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
     chown -R ${USER}:${USER} /home/${USER}
 
+WORKDIR /home/solana
+
 ARG SOLANA_VERSION=1.18.22
 COPY --chown=${USER}:${USER} --from=go-builder /go/bin/yamlfmt /go/bin/yamlfmt
-COPY --chown=${USER}:${USER} --from=builder /usr/local/cargo /usr/local/cargo
-COPY --chown=${USER}:${USER} --from=builder /usr/local/rustup /usr/local/rustup
-COPY --chown=${USER}:${USER} --from=builder /home/solana/.local/share/solana/install/releases/${SOLANA_VERSION} /home/solana/.local/share/solana/install/releases/${SOLANA_VERSION}
+COPY --chown=${USER}:${USER} --from=sol-builder /usr/local/cargo /usr/local/cargo
+COPY --chown=${USER}:${USER} --from=sol-builder /usr/local/rustup /usr/local/rustup
+COPY --chown=${USER}:${USER} --from=sol-builder /home/solana/.local/share/solana/install/releases/${SOLANA_VERSION} /home/solana/.local/share/solana/install/releases/${SOLANA_VERSION}
 ENV PATH=${PATH}:/usr/local/cargo/bin:/go/bin:/home/solana/.local/share/solana/install/releases/${SOLANA_VERSION}/bin
-WORKDIR /home/solana
 
 USER solana
 ENV CARGO_HOME=/usr/local/cargo
