@@ -10,7 +10,7 @@ This development container for Visual Studio Code is a pre-configured and isolat
 
 ```
 FROM anagrambuild/solana:latest
-ARG SOLANA_VERSION=1.18.22
+ARG SOLANA_VERSION=2.0.21
 ENV USER=solana
 ENV PATH=${PATH}:/usr/local/cargo/bin:/go/bin:/home/solana/.local/share/solana/install/releases/${SOLANA_VERSION}/bin
 WORKDIR /home/solana
@@ -23,7 +23,7 @@ USER solana
 
 #### Precompiled binaries
 
-Precompiled binaries are provided for amd64 architecture.  Arm64 is supported by building locally using the `build.sh`
+Precompiled binaries are provided for amd64 architecture.  Arm64 is supported by building locally using the `build.sh` script
 
 Also available from [GitHub GHCR](https://github.com/anagrambuild/solana/pkgs/container/solana)
 

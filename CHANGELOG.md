@@ -1,3 +1,7 @@
+# 2.0.21 (2025-01-05)
+
+* add support for agave 2.0.21
+
 # 1.18.22_10 (2024-10-29)
 
 * build-essential is required for rustc 🤷‍♀️

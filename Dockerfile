@@ -35,20 +35,18 @@ RUN useradd --create-home -s /bin/bash ${USER} && \
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
     chown -R ${USER}:${USER} /home/${USER}
 
-USER solana
-
 WORKDIR /build
 RUN chown -R ${USER}:${USER} /build
 
 ENV PATH=${PATH}:/home/solana/.cargo/bin
 RUN echo ${PATH} && cargo --version
 
-# Solana
-ARG SOLANA_VERSION=1.18.22
-RUN git clone --depth 1 --branch v${SOLANA_VERSION} https://github.com/solana-labs/solana.git && \
-    cd solana && ./scripts/cargo-install-all.sh /home/solana/.local/share/solana/install/releases/${SOLANA_VERSION}
-RUN for file in /home/solana/.local/share/solana/install/releases/${SOLANA_VERSION}/bin/*; do strip ${file}; done
-ENV PATH=$/build/bin:$PATH
+ARG SOLANA_VERSION=2.0.21
+
+RUN curl -sSL https://github.com/anza-xyz/agave/archive/refs/tags/v2.0.21.tar.gz | tar -zxvf - && \
+    cd agave-${SOLANA_VERSION} && \
+    ./scripts/cargo-install-all.sh /home/solana/.local/share/solana/install/releases/${SOLANA_VERSION} && \
+    for file in /home/solana/.local/share/solana/install/releases/${SOLANA_VERSION}/bin/*; do strip ${file}; done
 
 FROM debian:stable-slim
 
@@ -58,6 +56,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     build-essential \
     ca-certificates \
     curl \
+    ed \
     git \
     libssl-dev \
     openssl \
@@ -81,7 +80,7 @@ RUN useradd --create-home -s /bin/bash ${USER} && \
 
 WORKDIR /home/solana
 
-ARG SOLANA_VERSION=1.18.22
+ARG SOLANA_VERSION=2.0.21
 COPY --chown=${USER}:${USER} --from=go-builder /go/bin/yamlfmt /go/bin/yamlfmt
 COPY --chown=${USER}:${USER} --from=sol-builder /usr/local/cargo /usr/local/cargo
 COPY --chown=${USER}:${USER} --from=sol-builder /usr/local/rustup /usr/local/rustup
