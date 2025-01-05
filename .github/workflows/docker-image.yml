@@ -34,7 +34,7 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Anagram Solana development container          
+          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Anagram Solana development container
           build-args: |
             VERSION=${{ github.ref_name }}
           tags: |
