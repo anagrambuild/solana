@@ -1,3 +1,7 @@
+# 2.0.22 (2025-02-21)
+
+* bump rust to latest images
+
 # 2.0.21 (2025-01-05)
 
 * add support for agave 2.0.21

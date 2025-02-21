@@ -10,7 +10,7 @@ RUN go install github.com/google/yamlfmt/cmd/yamlfmt@latest && \
     strip $(which yamlfmt) && \
     yamlfmt --version
 
-FROM rust:1-slim AS sol-builder
+FROM rust:slim AS sol-builder
 ARG TARGETARCH
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get update && \
